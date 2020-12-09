@@ -1,0 +1,30 @@
+type User {
+  id: String!
+  name: String!
+}
+
+type Log {
+  id: String!
+  user: User!
+  message: String!
+  timestamp: String!
+}
+
+type Channel {
+  id: String!
+  name: String!
+}
+
+type Query {
+  channelList: [Channel]!
+  channel(id: String!): Channel
+  channelLog(id: String!, since: String): [Log]!
+  userList: [User]!
+}
+type Mutation {
+  registerUser(name: String!): User!
+  postMessage(channelId: String!, userId: String!, message: String!): Log!
+}
+type Subscription {
+  channelLog(id: String!): Log!
+}
