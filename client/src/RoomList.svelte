@@ -43,12 +43,12 @@
     <li>Loading...</li>
   {:else if $roomList.error}
     <li>ERROR: {$roomList.error.message}</li>
-  {:else if $roomList.data}
+  {:else if $roomList.data && $roomList.data.channelList.length}
     <ul class="room-list">
       {#each $roomList.data.channelList as room (room.id)}
         <li class="room-item">
           <a
-            class={`room-link ${room === active ? 'active' : ''}`}
+            class={`room-link ${room.id === active ? 'active' : ''}`}
             href={room.id}
             on:click|preventDefault={() => setRoom(room.id)}>{room.name}</a>
         </li>

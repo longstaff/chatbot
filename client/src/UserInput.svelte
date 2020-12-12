@@ -51,6 +51,15 @@
 </style>
 
 <div class="wrapper">
-  <input class="input" type="text" bind:value={input} on:keydown={testEnter} />
-  <button class="button" on:click={send} disabled={!enabled}>{label}</button>
+  <input
+    class="input"
+    type="text"
+    bind:value={input}
+    on:keydown={testEnter}
+    data-testid="text-input" />
+  <button
+    class="button"
+    on:click={send}
+    disabled={!enabled}
+    data-testid="text-submit">{label}</button>
 </div>

@@ -2,7 +2,7 @@
   import Main from "./Main.svelte";
   import SignUp from "./SignUp.svelte";
   import { setClient } from "svelte-apollo";
-  import client from "./createClinet";
+  import client from "./createClient";
 
   setClient(client);
 

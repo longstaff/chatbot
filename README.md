@@ -11,10 +11,12 @@ GraphQL is a very powerful server layer that has a lot of built-in cascading res
 - ✔ GraphQL with in memory storage for chat logs and users
 - ✔ Svelte app that lets you log in as a new user and post messages
 - ✔ Subscriptions with web sockets for realtime updates
+- ✔ Scroll on message
+- ✔ Testing for svelte
 
 ### Things that did not get done:
 
-- ❌ Testing
+- ❌ Testing for graphql
 - ❌ Dockerisation
 - ❌ External database for storage
 - ❌ DataLoaders for database connection

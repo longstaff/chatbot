@@ -4,11 +4,20 @@
   import UserInput from "./UserInput.svelte";
 
   export let setUser;
+
+  let loading;
   const registerUser = mutation(REGISTER_USER);
 
   const send = async (name) => {
-    const user = await registerUser({ variables: { name } });
-    setUser(user.data.registerUser);
+    if (!loading) {
+      loading = true;
+      try {
+        const user = await registerUser({ variables: { name } });
+        setUser(user.data.registerUser);
+      } catch (err) {
+        loading = false;
+      }
+    }
   };
 </script>
 

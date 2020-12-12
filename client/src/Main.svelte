@@ -35,7 +35,9 @@
     {#if room}
       <Room {room} {user} />
     {:else}
-      <p class="empty">Choose a room to start chatting</p>
+      <p class="empty" data-testid="empty-title">
+        Choose a room to start chatting
+      </p>
     {/if}
   </div>
 </div>
