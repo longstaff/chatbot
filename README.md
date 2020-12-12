@@ -13,20 +13,24 @@ GraphQL is a very powerful server layer that has a lot of built-in cascading res
 - ✔ Subscriptions with web sockets for realtime updates
 - ✔ Scroll on message
 - ✔ Testing for svelte
+- ✔ External database for storage
 
 ### Things that did not get done:
 
 - ❌ Testing for graphql
 - ❌ Dockerisation
-- ❌ External database for storage
 - ❌ DataLoaders for database connection
 - ❌ Error handling in app
 
 ## Just get it running already!
 
+To get the database up and running use `docker-compose -f docker.yml up`.
+
 Each section (`server` and `client`) should run `yarn build` to build the distribution version and `yarn start` to serve it.
 
-Currently GraphQL is hosted on `http://localhost:3000` and the application is on `http://localhost:5000`. Obviously both need to be running or the client will complain.
+Currently GraphQL is hosted on `http://localhost:3000` and the application is on `http://localhost:5000`.
+
+Obviously the db needs to be running for the server and both need to be running or the client will complain.
 
 ### What about a dev build?
 

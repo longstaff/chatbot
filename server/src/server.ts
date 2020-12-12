@@ -8,7 +8,11 @@ import compression from 'compression';
 import cors from 'cors';
 import schema from './schema';
 
+import { init as initDatabase, query } from './postgre';
+
 const PORT = 3000;
+
+initDatabase();
 
 const app = express();
 const server = new ApolloServer({

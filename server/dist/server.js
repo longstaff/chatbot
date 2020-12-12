@@ -1,7 +1,9 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
+var __importDefault =
+  (this && this.__importDefault) ||
+  function (mod) {
+    return mod && mod.__esModule ? mod : { default: mod };
+  };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var apollo_server_express_1 = require("apollo-server-express");
@@ -15,24 +17,26 @@ var schema_1 = __importDefault(require("./schema"));
 var PORT = 3000;
 var app = express_1.default();
 var server = new apollo_server_express_1.ApolloServer({
-    schema: schema_1.default,
-    validationRules: [graphql_depth_limit_1.default(7)],
-    subscriptions: {
-        keepAlive: 5000,
-    }
+  schema: schema_1.default,
+  validationRules: [graphql_depth_limit_1.default(7)],
+  subscriptions: {
+    keepAlive: 5000,
+  },
 });
-app.use('*', cors_1.default());
+app.use("*", cors_1.default());
 app.use(compression_1.default());
-server.applyMiddleware({ app: app, path: '/graphql' });
+server.applyMiddleware({ app: app, path: "/graphql" });
 var ws = http_1.createServer(app);
 ws.listen(PORT, function () {
-    console.log("Apollo Server is now running on http://localhost:" + PORT);
-    new subscriptions_transport_ws_1.SubscriptionServer({
-        execute: graphql_1.execute,
-        subscribe: graphql_1.subscribe,
-        schema: schema_1.default
-    }, {
-        server: ws,
-        path: '/subscriptions',
-    });
+  new subscriptions_transport_ws_1.SubscriptionServer(
+    {
+      execute: graphql_1.execute,
+      subscribe: graphql_1.subscribe,
+      schema: schema_1.default,
+    },
+    {
+      server: ws,
+      path: "/subscriptions",
+    }
+  );
 });

@@ -8,15 +8,16 @@ const resolverMap: IResolvers = {
     channel: (_, args, context) => {
       return api.channels.find(args.id);
     },
-    channelList: (_, __, context) => {
+    channelList: async (_, __, context) => {
       return api.channels.list();
     },
     userList: (_, __, context) => {
       return api.users.list();
     },
-    channelLog: (_, args, context) => {
-      const {id} = args;
-      return api.logs.list(id).map((log:any) => ({...log, channelId:id}));
+    channelLog: async (_, args, context) => {
+      //const {id} = args;
+      return await api.logs.list(args.id)
+      //return logs.map((log:any) => ({...log, channelId:id}));
     },
   },
   Mutation: {
@@ -24,17 +25,15 @@ const resolverMap: IResolvers = {
       const {name} = args;
       return api.users.add({name});
     },
-    postMessage: (_, args, context) => {
+    postMessage: async (_, args, context) => {
       const {channelId, userId, message} = args;
-      const { userId: newUserId, ...rest } = api.logs.add(channelId, {userId, message});
+      const { userId: newUserId, ...rest } = await api.logs.add({channelId, message, userId});
       const log = {
         ...rest,
-        channelId,
         user: { id: newUserId },
       }
       
       pubsub.publish('logAdded', log)
-
       return log;
     }
   },
@@ -50,28 +49,28 @@ const resolverMap: IResolvers = {
   },
   
   Channel: {
-    name: (parent, _, context) => {
-      const channel = api.channels.find(parent.id);
+    name: async (parent, _, context) => {
+      const channel = await api.channels.find(parent.id);
       return channel?.name;
     }
   },
   User: {
-    name: (parent, _, context) => {
-      const user = api.users.find(parent.id);
+    name: async (parent, _, context) => {
+      const user = await api.users.find(parent.id);
       return user?.name;
     }
   },
   Log: {
-    user: (parent, _, context) => {
-      const log = api.logs.find(parent.channelId, parent.id);
+    user: async (parent, _, context) => {
+      const log = await api.logs.find(parent.channelId, parent.id);
       return {id: log?.userId};
     },
-    message: (parent, _, context) => {
-      const log = api.logs.find(parent.channelId, parent.id);
+    message: async (parent, _, context) => {
+      const log = await api.logs.find(parent.channelId, parent.id);
       return log?.message;
     },
-    timestamp: (parent, _, context) => {
-      const log = api.logs.find(parent.channelId, parent.id);
+    timestamp: async (parent, _, context) => {
+      const log = await api.logs.find(parent.channelId, parent.id);
       return log?.timestamp;
     }
   }
